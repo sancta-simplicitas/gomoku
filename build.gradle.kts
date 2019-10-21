@@ -11,10 +11,19 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
-
+val arrowVersion = "0.10.1"
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testCompile("junit", "junit", "4.12")
+    implementation("io.arrow-kt:arrow-core:$arrowVersion")
+    implementation("io.arrow-kt:arrow-syntax:$arrowVersion")
+    implementation("io.arrow-kt:arrow-meta:$arrowVersion")
+    implementation("io.arrow-kt:arrow-fx:$arrowVersion")
+    implementation("io.arrow-kt:arrow-optics:$arrowVersion")
+    implementation("io.arrow-kt:arrow-data:0.8.2")
+    implementation("io.arrow-kt:arrow-effects:0.8.2")
+    implementation("io.arrow-kt:arrow-test:$arrowVersion")
+    implementation("io.arrow-kt:arrow-typeclasses:0.9.0")
 }
 
 configure<JavaPluginConvention> {
