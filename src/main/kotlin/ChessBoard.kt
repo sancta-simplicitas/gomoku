@@ -31,7 +31,7 @@ class ChessBoard : JPanel() {
             fillRect(MARGIN + (ROCO - 3) * SPAN - 2, MARGIN + (ROCO - 3) * SPAN - 2, 5, 5)
             //画棋子:
             (0 until chessCount).forEach {
-                chessList[it].draw(this)
+                chessList[it].draw(g)
                 if (it == chessCount - 1) { // 如果是最后一个棋子
                     color = Color.red
                     drawRect( //下一行: xPos, 下下行: yPos //- DIAMETER / 2
@@ -47,7 +47,7 @@ class ChessBoard : JPanel() {
 
     override fun getPreferredSize() = Dimension(MARGIN * 2 + SPAN * ROCO, MARGIN * 2 + SPAN * ROCO)
 
-    class MouseMonitor : MouseAdapter() {
+    inner class MouseMonitor : MouseAdapter() {
         override fun mousePressed(e: MouseEvent) = with(e) {
             (x - MARGIN + SPAN / 2) / SPAN to (y - MARGIN + SPAN / 2) / SPAN
         }.run {
@@ -57,21 +57,18 @@ class ChessBoard : JPanel() {
             // 落在棋盘外不能下棋
             if (col < 0 || col > ROCO || row < 0 || row > ROCO) return
             // 已经有棋子存在的x,y不能下棋
-            with(ChessBoard()) {
-                fun hasChess(col: Int, row: Int) = run {
-                    for (i in 0 until chessCount) {
-                        val ch = listOf<Chess>()[i]
-                        if (ch.col == col && ch.row == row) return true
-                    }
-                    false
+            fun hasChess(col: Int, row: Int) = run {
+                for (i in 0 until chessCount) {
+                    val ch = chessList[i]
+                    if (ch.col == col && ch.row == row) return true
                 }
-                if (hasChess(col, row)) return
-                Chess(col, row, if (isBlack) Color.BLACK else Color.WHITE).let {
-                    chessList[chessCount++] = it
-                    repaint()
-                    isBlack = !isBlack
-                }
+                false
             }
+            if (hasChess(col, row)) return
+            chessCount += 1
+            chessList.add(Chess(col, row, if (isBlack) Color.BLACK else Color.WHITE))
+            repaint()
+            isBlack = !isBlack
         }
     }
     init {
