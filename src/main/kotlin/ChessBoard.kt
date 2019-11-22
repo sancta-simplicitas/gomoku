@@ -129,4 +129,20 @@ class ChessBoard : JPanel() {
         }
         continueCount >= 5
     }
+
+    fun restartGame() {
+        chessList = ArrayList()
+        isBlack = true
+        isGamming = true
+        chessCount = 0
+        repaint()
+    }
+
+    fun goBack() {
+        if (chessCount==0) return
+        chessList.run { removeAt(this.lastIndex) }
+        chessCount--
+        isBlack = !isBlack
+        repaint()
+    }
 }

@@ -2,15 +2,21 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.3.60"
+    application
 }
 
 group = "com.github.hzqd.gomoku"
-version = "1.0-SNAPSHOT"
+version = "0.1"
+
+application {
+    mainClassName = "AppKt"
+}
 
 repositories {
     mavenCentral()
 }
+
 val arrowVersion = "0.10.1"
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
